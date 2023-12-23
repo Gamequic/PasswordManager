@@ -43,7 +43,7 @@ const Login = () => {
           width:"100%", height:"100%"
         }}>
           <Button color="primary" variant="ghost" style={{marginRight:'var(--nextui-spacing-unit-xs)'}}>
-            Registrer
+            Sign up
           </Button> 
           <Button color="primary" variant="shadow">
             Log In
