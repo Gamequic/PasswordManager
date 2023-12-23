@@ -11,7 +11,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <NextUIProvider>
-      <main className="dark text-foreground bg-background">
+      <main style={{
+        height: "100vh",
+        width: "100vw",
+        display: 'flex',
+        alignItems: "center",
+        justifyContent: "center",
+      }} className="dark text-foreground bg-background">
         <App />
       </main>
     </NextUIProvider>

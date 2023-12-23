@@ -5,7 +5,7 @@ import {Button} from "@nextui-org/react";
 import {Image} from "@nextui-org/react";
 import {Input} from "@nextui-org/react";
 
-const Login = () => {
+const Register = () => {
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -54,4 +54,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default Register;
