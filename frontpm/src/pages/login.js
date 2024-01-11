@@ -1,9 +1,6 @@
 import React from "react";
 
-import {Card, CardHeader, CardBody, CardFooter, Divider} from "@nextui-org/react";
-import {Button} from "@nextui-org/react";
-import {Image} from "@nextui-org/react";
-import {Input} from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Input, Image } from "@nextui-org/react";
 
 const Login = () => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -19,7 +16,7 @@ const Login = () => {
       <Divider/>
       <CardBody>
         <Input type="email" label="Email" placeholder="Enter your email" />
-        <div style={{marginBottom:'var(--nextui-spacing-unit-xs)'}} />
+        <div className="py-unit-xs" />
         <Input
           label="Password"
           variant="bordered"
@@ -34,7 +31,6 @@ const Login = () => {
             </button>
           }
           type={isVisible ? "text" : "password"}
-          className="max-w-xs"
         />
       </CardBody>
       <Divider/>

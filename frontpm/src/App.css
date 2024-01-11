@@ -6,3 +6,10 @@
   width: 45px;
   margin: auto;
 }
+
+footer {
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}

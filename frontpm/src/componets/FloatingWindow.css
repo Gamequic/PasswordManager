@@ -1,0 +1,16 @@
+.floatingBackground {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+}
+
+.floatingBackground div {
+  margin: 0 auto;
+}

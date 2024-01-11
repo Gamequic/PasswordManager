@@ -1,0 +1,30 @@
+header {
+  width: 100vw;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftHeader {
+  position: absolute;
+  left: 0;
+  margin-left: var(--nextui-spacing-unit-4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leftHeader img {
+  margin-right: var(--nextui-spacing-unit-4);
+}
+
+.rightHeader {
+  position: absolute;
+  right: 0;
+  margin-right: var(--nextui-spacing-unit-4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
