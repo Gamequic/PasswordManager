@@ -18,21 +18,6 @@ const UserSchema = {
         allowNull: false,
         type: DataTypes.STRING,
     },
-    permissions: {
-        allowNull: false,
-        type: DataTypes.JSONB,
-        defaultValue: {
-            Menu: false,
-            Promotions: false,
-            locations: false,
-            createUsers: false,
-        },
-    },
-    adminId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        defaultValue: undefined,
-    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -42,11 +27,7 @@ const UserSchema = {
 };
 
 class User extends Model {
-    static associate(models) {
-        User.belongsTo(models.Admin, { foreignKey: 'adminId', as: 'admin' });
-    }
-
-    static config(sequelize) {
+static config(sequelize) {
         return {
             sequelize,
             tableName: USER_TABLE,

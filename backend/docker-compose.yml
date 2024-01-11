@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres
     environment:
-      - POSTGRES_DB=restaurants
+      - POSTGRES_DB=passwordManager
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
     ports:

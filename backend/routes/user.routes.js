@@ -5,19 +5,17 @@ const express = require('express');
 const validationHandler = require('../middlewares/validator.handler');
 const {
     createUserSchema,
-    updateUserSchema,
-    getUserSchema,
+    // updateUserSchema,
+    // getUserSchema,
 } = require('../schemas/user.schema');
 const UserService = require('../services/user.service');
-const { authentication, checkPermission } = require('../middlewares/auth.handler');
+// const { authentication, checkPermission } = require('../middlewares/auth.handler');
 
 const router = express.Router();
 const service = new UserService();
 
 router.post(
     '/create',
-    authentication,
-    checkPermission('createUsers'),
     validationHandler(createUserSchema, 'body'),
     async (req, res, next) => {
         try {
@@ -29,69 +27,69 @@ router.post(
     },
 );
 
-router.delete(
-    '/delete/:id',
-    authentication,
-    checkPermission('createUsers'),
-    validationHandler(getUserSchema, 'params'),
-    async (req, res, next) => {
-        try {
-            const userId = req.params.id;
-            const adminId = req.headers.id;
-            res.status(201).json(await service.delete(userId, adminId));
-        } catch (error) {
-            next(error);
-        }
-    },
-);
+// router.delete(
+//     '/delete/:id',
+//     authentication,
+//     checkPermission('createUsers'),
+//     validationHandler(getUserSchema, 'params'),
+//     async (req, res, next) => {
+//         try {
+//             const userId = req.params.id;
+//             const adminId = req.headers.id;
+//             res.status(201).json(await service.delete(userId, adminId));
+//         } catch (error) {
+//             next(error);
+//         }
+//     },
+// );
 
-router.get(
-    '/:id',
-    authentication,
-    checkPermission('createUsers'),
-    validationHandler(getUserSchema, 'params'),
-    async (req, res, next) => {
-        try {
-            const adminId = req.headers.id;
-            const userId = req.params.id;
-            res.json(await service.findOne(userId, adminId));
-        } catch (error) {
-            next(error);
-        }
-    },
-);
+// router.get(
+//     '/:id',
+//     authentication,
+//     checkPermission('createUsers'),
+//     validationHandler(getUserSchema, 'params'),
+//     async (req, res, next) => {
+//         try {
+//             const adminId = req.headers.id;
+//             const userId = req.params.id;
+//             res.json(await service.findOne(userId, adminId));
+//         } catch (error) {
+//             next(error);
+//         }
+//     },
+// );
 
-router.get(
-    '/',
-    authentication,
-    checkPermission('createUsers'),
-    async (req, res, next) => {
-        try {
-            const adminId = req.headers.id;
-            res.json(await service.find(adminId));
-        } catch (error) {
-            next(error);
-        }
-    },
-);
+// router.get(
+//     '/',
+//     authentication,
+//     checkPermission('createUsers'),
+//     async (req, res, next) => {
+//         try {
+//             const adminId = req.headers.id;
+//             res.json(await service.find(adminId));
+//         } catch (error) {
+//             next(error);
+//         }
+//     },
+// );
 
-router.patch(
-    '/:id',
-    authentication,
-    checkPermission('createUsers'),
-    validationHandler(updateUserSchema, 'body'),
-    validationHandler(getUserSchema, 'params'),
-    async (req, res, next) => {
-        try {
-            const adminId = req.headers.id;
-            const userId = req.params.id;
-            const body = req.body;
-            res.json(await service.update(userId, body, adminId));
-        } catch (error) {
-            next(error);
-        }
-    },
-);
+// router.patch(
+//     '/:id',
+//     authentication,
+//     checkPermission('createUsers'),
+//     validationHandler(updateUserSchema, 'body'),
+//     validationHandler(getUserSchema, 'params'),
+//     async (req, res, next) => {
+//         try {
+//             const adminId = req.headers.id;
+//             const userId = req.params.id;
+//             const body = req.body;
+//             res.json(await service.update(userId, body, adminId));
+//         } catch (error) {
+//             next(error);
+//         }
+//     },
+// );
 
 // router.get('/:id',
 //   validationHandler(getUserSchema, 'params'),

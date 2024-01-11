@@ -161,55 +161,32 @@ class AuthService {
             where: {
                 email: email,
             },
-            include: [
-                {
-                    model: models.Admin,
-                    as: 'admin',
-                },
-            ],
         });
         if (user) {
-            user.dataValues = { ...user.dataValues, role: 'user' };
-        }
-
-        //Does admin exists?
-        if (!user) {
-            user = await models.Admin.findOne({
-                where: {
-                    email: email,
-                },
-            });
-            if (user) {
-                user.dataValues = { ...user.dataValues, role: 'admin' };
-            }
+            user.dataValues = { ...user.dataValues };
         }
         if (!user) {
-            throw boom.unauthorized('User does not exist');
+            throw boom.notFound('User not found');
         }
 
-        //Comprobar contraseña
+        //Check password
         const result = await bcrypt.compare(password, user.dataValues.password);
         if (!result) {
-            //Contraseña incorrecta
+            //Incorrect password
             throw boom.unauthorized('Password is wrong');
         }
 
-        //Generar token
+        //Create token
         const token = await jwt.sign(
             {
                 id: user.dataValues.id,
                 email: user.dataValues.email,
-                role: user.dataValues.role,
-                permissions: user.dataValues.permissions,
-                adminId: user.dataValues.adminId,
-                websiteId: user.dataValues.role === 'admin' ? user.dataValues.websiteId : user.dataValues.admin.dataValues.websiteId
             },
             config.authSecret,
             { expiresIn: 1800 },
         ); //30 min
 
         delete user.dataValues.password;
-        delete user.dataValues.admin;
 
         const userData = {
             ...user.dataValues,
