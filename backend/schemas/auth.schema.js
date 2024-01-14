@@ -2,7 +2,6 @@ const Joi = require('joi');
 
 // const role = Joi.string().min(5);
 // const descripcion = Joi.string();
-// const name = Joi.string();
 // const lastname = Joi.string();
 // const username = Joi.string();
 // const photo = Joi.string();
@@ -12,7 +11,7 @@ const Joi = require('joi');
 const email = Joi.string().email();
 const password = Joi.string().min(8);
 
-const logIn = Joi.object({
+const login = Joi.object({
     email: email.required(),
     password: password.required(),
 });
@@ -47,4 +46,4 @@ const logIn = Joi.object({
 //   id: id.required(),
 // });
 
-module.exports = { logIn };
+module.exports = { login };

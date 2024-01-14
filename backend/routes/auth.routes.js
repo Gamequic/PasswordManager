@@ -3,7 +3,7 @@ const express = require('express');
 // const boom = require('boom')
 
 const validationHandler = require('../middlewares/validator.handler');
-const { logIn } = require('../schemas/auth.schema');
+const { login } = require('../schemas/auth.schema');
 const AuthService = require('../services/auth.service');
 // const { authentication, authenticationToSelf, rootAuth} = require('../middlewares/auth.handler')
 
@@ -12,7 +12,7 @@ const service = new AuthService();
 
 router.post(
     '/login',
-    validationHandler(logIn, 'body'),
+    validationHandler(login, 'body'),
     async (req, res, next) => {
         try {
             res.status(201).json(await service.logIn(req.body));

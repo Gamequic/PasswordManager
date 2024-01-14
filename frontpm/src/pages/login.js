@@ -2,10 +2,39 @@ import React from "react";
 
 import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Input, Image } from "@nextui-org/react";
 
+import Warning from './../componets/Warning'
+
+import AuthService from './../services/AuthService';
+const Service = new AuthService();
+
 const Login = () => {
   const [isVisible, setIsVisible] = React.useState(false);
 
+  const [warning, setWarning] = React.useState();
+
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
+
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleInput = (setValue) => {
+    return (event) => {
+      setValue(event.target.value);
+    }
+  }
+
+  const handleLogIn = async () => {
+    try {
+      await Service.LogIn({
+        email,
+        password
+      });
+
+      // window.location.href = '/'
+    } catch (error) {
+      setWarning(error.response.data.message);
+    }
+  }
 
   return (
     <Card className="max-w-[400px]">
@@ -15,9 +44,11 @@ const Login = () => {
       </CardHeader>
       <Divider/>
       <CardBody>
-        <Input type="email" label="Email" placeholder="Enter your email" />
+        <Input type="email" label="Email" placeholder="Enter your email" value={email} onChange={handleInput(setEmail)} />
         <div className="py-unit-xs" />
         <Input
+          onChange={handleInput(setPassword)}
+          value={password}
           label="Password"
           variant="bordered"
           placeholder="Enter your password"
@@ -35,13 +66,14 @@ const Login = () => {
       </CardBody>
       <Divider/>
       <CardFooter>
+        <Warning message={warning} />
         <div style={{ 
           width:"100%", height:"100%"
         }}>
-          <Button color="primary" variant="ghost" style={{marginRight:'var(--nextui-spacing-unit-xs)'}}>
+          <Button color="primary" variant="ghost" style={{marginRight:'var(--nextui-spacing-unit-xs)'}} onClick={() => {window.location.href = '/signup'}}>
             Sign up
           </Button> 
-          <Button color="primary" variant="shadow">
+          <Button color="primary" variant="shadow" onClick={handleLogIn}>
             Log In
           </Button>
         </div>
