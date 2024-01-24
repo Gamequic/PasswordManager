@@ -18,10 +18,10 @@ const Recovery = () => {
         <div style={{ 
           width:"100%", height:"100%"
         }}>
-          <Button color="primary" variant="ghost" style={{marginRight:'var(--nextui-spacing-unit-xs)'}}>
+          <Button color="primary" variant="ghost" style={{marginRight:'var(--nextui-spacing-unit-xs)'}} onClick={() => {window.location.href='/login'}} >
             Cancel
           </Button> 
-          <Button color="primary" variant="shadow">
+          <Button color="primary" variant="shadow" onClick={() => {window.location.href='/confirmrecovery'}} >
             Send Email
           </Button>
         </div>

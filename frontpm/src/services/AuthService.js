@@ -32,22 +32,22 @@ class AuthService {
     const nowTime = await new Date();
     const differenceInMinutes = (nowTime - time) / (1000 * 60);
 
+    var user;
     if (differenceInMinutes > 25) {
-      // Log in and use token
-      const response = await axios.post(`${this.apiURl}/auth/login`, {
-        email: data.email,
-        password: data.password,
-      });
-      await this.SaveUserData({
-        ...response.data.userData,
-        email: data.email,
-        password: data.password,
-      });
-      return response.data.userData.token;
+      this.LogIn();
+      user = this.GetUserData();
+      return user.token;
     } else {
-      //Use token
-      return data.token;
+      return user.token;
     }
+  }
+
+  async AskPasswordReset ({ email }) {
+    const body = {
+      email,
+    };
+
+    const rta = await axios.post(this.apiURl + '/auth/askresetpassword', body);
   }
 
   async SignUp ({ name, email, password }) {

@@ -3,7 +3,7 @@ const express = require('express');
 // const boom = require('boom')
 
 const validationHandler = require('../middlewares/validator.handler');
-const { login } = require('../schemas/auth.schema');
+const { login, askPasswordReset, applyPasswordReset } = require('../schemas/auth.schema');
 const AuthService = require('../services/auth.service');
 // const { authentication, authenticationToSelf, rootAuth} = require('../middlewares/auth.handler')
 
@@ -20,6 +20,32 @@ router.post(
             next(error);
         }
     },
+);
+
+router.post("/askresetpassword",
+  validationHandler(askPasswordReset, 'body'),
+  async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      rta = await service.askPasswordReset(email)
+      res.status(201).json({rta})
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post("/resetpassword",
+  validationHandler(applyPasswordReset, 'body'),
+  async (req, res, next) => {
+    try {
+      const { password, token } = req.body;
+      user = await service.applyPasswordReset(token, password)
+      res.status(201).json({user: user})
+    } catch (error) {
+      next(error);
+    }
+  }
 );
 
 // router.get('/',
@@ -87,45 +113,6 @@ router.post(
 //       const profilePhoto = req.files.profilePhoto
 //       const user = await service.uploadPhoto(profilePhoto, id);
 //       res.status(201).json(user);
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
-// router.post("/askresetpassword",
-//   validationHandler(askPasswordReset, 'body'),
-//   async (req, res, next) => {
-//     try {
-//       const { email } = req.body;
-//       rta = await service.askPasswordReset(email)
-//       res.status(201).json({rta})
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
-// router.post("/resetpassword",
-//   validationHandler(applyPasswordReset, 'body'),
-//   async (req, res, next) => {
-//     try {
-//       const { password, token } = req.body;
-//       user = await service.applyPasswordReset(token, password)
-//       res.status(201).json({user: user})
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
-
-// router.post("/login",
-//   validationHandler(login, 'body'),
-//   async (req, res, next) => {
-//     try {
-//       const { password, email } = req.body;
-//       token = await service.logIn(email, password)
-//       res.status(201).json(token)
 //     } catch (error) {
 //       next(error);
 //     }

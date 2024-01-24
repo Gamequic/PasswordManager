@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Input, Image } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Divider, Button, Input, Image, Link } from "@nextui-org/react";
 
 import Warning from './../componets/Warning'
 
@@ -30,7 +30,7 @@ const Login = () => {
         password
       });
 
-      // window.location.href = '/'
+      window.location.href = '/'
     } catch (error) {
       setWarning(error.response.data.message);
     }
@@ -63,6 +63,8 @@ const Login = () => {
           }
           type={isVisible ? "text" : "password"}
         />
+        <div className="py-unit-xs" />
+        <Link href="/recovery" underline="hover">Forgot password?</Link>
       </CardBody>
       <Divider/>
       <CardFooter>
