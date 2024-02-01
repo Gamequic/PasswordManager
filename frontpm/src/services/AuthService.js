@@ -48,6 +48,19 @@ class AuthService {
     };
 
     const rta = await axios.post(this.apiURl + '/auth/askresetpassword', body);
+
+    return rta;
+  }
+
+  async ApplyPasswordReset ({ password, token }) {
+    const body = {
+      password,
+      token
+    };
+
+    const rta = await axios.post(this.apiURl + '/auth/resetpassword', body);
+
+    return rta;
   }
 
   async SignUp ({ name, email, password }) {

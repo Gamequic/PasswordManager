@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import Recovery from './pages/Recovery';
 import ConfirmRecovery from './pages/ConfirmRecovery';
+import CheckYourEmail from './pages/CheckYourEmail';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/recovery" element={<Recovery />} />
           <Route path="/confirmrecovery" element={<ConfirmRecovery />} />
+          <Route path="/checkyouremail" element={<CheckYourEmail />} />
         </Routes>
       </div>
     </Router>
