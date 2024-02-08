@@ -1,37 +1,38 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const WEBSITE_TABLE = 'Website';
+const PASSWORD_TABLE = 'Password';
 
-const WebsiteSchema = {
+const PasswordSchema = {
     id: {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
         type: DataTypes.INTEGER,
     },
-    adminId: {
+    userId: {
         allowNull: true,
         defaultValue: undefined,
         type: DataTypes.INTEGER,
     },
     URL: {
-        allowNull: false,
+        allowNull: true,
+        defaultValue: undefined,
         type: DataTypes.STRING,
     },
-    menu: {
-        allowNull: true,
-        type: DataTypes.JSONB,
-        defaultValue: {},
-    },
-    locations: {
-        allowNull: true,
-        type: DataTypes.JSONB,
+    username: {
+        allowNull: false,
         defaultValue: undefined,
+        type: DataTypes.STRING,
     },
-    promotions: {
-        allowNull: true,
-        type: DataTypes.JSONB,
+    email: {
+        allowNull: false,
         defaultValue: undefined,
+        type: DataTypes.STRING,
+    },
+    password: {
+        allowNull: false,
+        defaultValue: undefined,
+        type: DataTypes.STRING,
     },
     createdAt: {
         allowNull: false,
@@ -41,19 +42,19 @@ const WebsiteSchema = {
     },
 };
 
-class Website extends Model {
-    static associate(models) {
-        Website.belongsTo(models.Admin, { foreignKey: 'adminId', as: 'admin' });
-    }
+class Password extends Model {
+    // static associate(models) {
+    //     Website.belongsTo(models.Admin, { foreignKey: 'adminId', as: 'admin' });
+    // }
 
     static config(sequelize) {
         return {
             sequelize,
-            tableName: WEBSITE_TABLE,
-            modelName: 'Websites',
+            tableName: PASSWORD_TABLE,
+            modelName: 'Password',
             timestamps: false,
         };
     }
 }
 
-module.exports = { WEBSITE_TABLE, WebsiteSchema, Website };
+module.exports = { PASSWORD_TABLE, PasswordSchema, Password };
