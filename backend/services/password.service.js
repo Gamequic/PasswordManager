@@ -1,11 +1,22 @@
 const boom = require('boom');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const CryptoJS = require("crypto-js");
+const { config } = require('./../config/config');
 
 const { models } = require('../libs/sequelize');
 
 class PasswordService {
     constructor() {}
+
+    async encrypt(string) {
+        return CryptoJS.AES.encrypt(string, config.passwordSecret).toString();
+    }
+
+    async decrypt(string) {
+        var decryptString  = CryptoJS.AES.decrypt(string, config.passwordSecret).toString(CryptoJS.enc.Utf8);
+        return decryptString;
+    }
 
     async create(Body, photo, userId) {
         var URL;
@@ -16,6 +27,7 @@ class PasswordService {
         const newPassword = await models.Password.create({
             ...{
                 ...Body,
+                password: this.encrypt(Body.password),
                 userId,
                 URL
             },
@@ -25,16 +37,22 @@ class PasswordService {
     }
 
     async findAll(userId) {
-        const Password = await models.Password.findAll({
+        const Passwords = await models.Password.findAll({
             where: {
               userId
             }
           });
-        if (!Password) {
+        if (!Passwords) {
             throw boom.notFound('Password not found');
         }
 
-        return Password;
+        for (let Password in Passwords) {
+            const encryptPassowrd = Passwords[Password].dataValues.password;
+            const decryptPassword = await this.decrypt(encryptPassowrd);
+            Passwords[Password].dataValues.password = decryptPassword;
+        }
+
+        return Passwords;
     }
 
     async findOne(id, userId) {
@@ -47,6 +65,8 @@ class PasswordService {
             throw boom.unauthorized("This passwords do not belong to you");
         }
 
+        Password.dataValues.password = await this.decrypt(Password.dataValues.password);
+
         return Password;
     }
 
@@ -57,10 +77,17 @@ class PasswordService {
         }
 
         const Password = await this.findOne(id, userId);
-        const rta = await Password.update({
+
+        var password = {
             ...changes,
             URL
-        });
+        };
+
+        if (changes.password) {
+            password.password = this.encrypt(changes.password);
+        }
+
+        const rta = await Password.update(password);
         return rta;
     }
 
